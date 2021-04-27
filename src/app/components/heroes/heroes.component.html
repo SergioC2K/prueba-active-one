@@ -1,0 +1,168 @@
+<!--Formulario para buscar heroes -->
+<div class="container mt-3">
+  <h3>Buscar Heroes #{{ heroes_list.length }}</h3>
+  <form (ngSubmit)="find_heroe()" [formGroup]="heroes_find_form" class="d-flex">
+    <input
+      type="search"
+      class="form-control me-2"
+      name="poder_val"
+      id="poder_val"
+      formControlName="poder_val"
+      width="10%"
+    />
+    <button type="submit" class="btn btn-primary">Buscar</button>
+  </form>
+</div>
+
+<div class="container mt-2">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <h5 class="card-header">Heroes</h5>
+        <div class="card-body">
+          <ul class="list-group">
+            <li class="list-group-item" *ngFor="let hero of heroes_list">
+              <figure>
+                <img
+                  class="img-fluid"
+                  src="{{ hero.foto }}"
+                  alt="{{ hero.nombre }}"
+                />
+                <figcaption>
+                  <strong>{{ hero.nombre }} Poder:{{ hero.poder }}</strong>
+                </figcaption>
+              </figure>
+              <button
+                (click)="delete_heroe(hero.id)"
+                class="btn btn-danger"
+                type="button"
+              >
+                Eliminar
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!--Formulario para añadir heroes -->
+    <div class="col">
+      <div class="card">
+        <h5 class="card-header">Nuevo Heroe</h5>
+        <div class="card-body">
+          <form (ngSubmit)="add_heroe()" [formGroup]="heroes_form">
+            <div class="mb-3">
+              <label for="nombre" class="form-label">Nombre</label>
+              <input
+                type="text"
+                class="form-control"
+                name="nombre"
+                id="nombre"
+                formControlName="nombre"
+              />
+              <div
+                *ngIf="
+                  nombre &&
+                  nombre.invalid &&
+                  nombre.errors &&
+                  (nombre.touched || nombre.dirty)
+                "
+              >
+                <div
+                  class="alert alert-danger"
+                  role="alert"
+                  *ngIf="nombre.hasError('required')"
+                >
+                  <strong> El nombre es obligatorio.</strong>
+                </div>
+
+                <div
+                  class="alert alert-danger"
+                  role="alert"
+                  *ngIf="nombre.hasError('minLength')"
+                >
+                  <strong> El nombre debe tener minimo 4 caracteres.</strong>
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="poder" class="form-label">Poder</label>
+              <input
+                type="text"
+                class="form-control"
+                name="poder"
+                id="poder"
+                formControlName="poder"
+              />
+              <div
+                *ngIf="
+                  poder &&
+                  poder.invalid &&
+                  poder.errors &&
+                  (poder.touched || poder.dirty)
+                "
+              >
+                <div
+                  class="alert alert-danger"
+                  role="alert"
+                  *ngIf="poder.hasError('required')"
+                >
+                  <strong> El poder es obligatorio.</strong>
+                </div>
+
+                <div
+                  class="alert alert-danger"
+                  role="alert"
+                  *ngIf="poder.hasError('minLength')"
+                >
+                  <strong> El poder debe tener minimo 4 caracteres.</strong>
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="foto" class="form-label">Foto URL</label>
+              <input
+                type="text"
+                class="form-control"
+                name="foto"
+                id="foto"
+                formControlName="foto"
+              />
+              <div
+                *ngIf="
+                  foto &&
+                  foto.invalid &&
+                  foto.errors &&
+                  (foto.touched || foto.dirty)
+                "
+              >
+                <div
+                  class="alert alert-danger"
+                  role="alert"
+                  *ngIf="foto.hasError('required')"
+                >
+                  <strong> La foto es obligatoria.</strong>
+                </div>
+
+                <div
+                  class="alert alert-danger"
+                  role="alert"
+                  *ngIf="foto.hasError('minLength')"
+                >
+                  <strong> La foto debe tener minimo 4 caracteres.</strong>
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <input
+                type="submit"
+                class="btn btn-success btn-block"
+                [disabled]="heroes_form.invalid"
+                value="Guardar"
+              />
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

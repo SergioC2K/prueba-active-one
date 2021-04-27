@@ -3,7 +3,7 @@
 }*/
 
 export interface Heroe {
-  id: String;
+  hero_id: String;
   nombre: String;
   poder: String;
   foto: String;

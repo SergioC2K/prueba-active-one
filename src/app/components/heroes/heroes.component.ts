@@ -4,7 +4,7 @@ import { Heroe } from '../../interfaces/heroes';
 
 const her: Heroe[] = [
   {
-    id: '0',
+    hero_id: '0',
     nombre: 'Super Man',
     poder: 'Volar',
     foto:
@@ -32,21 +32,33 @@ export class HeroesComponent implements OnInit {
   });
 
   heroes_form = new FormGroup({
-    id: new FormControl(this.heroes_list.length + 1, [Validators.required]),
+    hero_id: new FormControl('', [
+      Validators.required,
+      Validators.minLength(1),
+    ]),
     nombre: new FormControl('', [Validators.required, Validators.minLength(4)]),
     poder: new FormControl('', [Validators.required, Validators.minLength(4)]),
     foto: new FormControl('', [Validators.required, Validators.minLength(10)]),
   });
 
   add_heroe() {
-    this.heroes_list.push(this.heroes_form.value);
+    let form = this.heroes_form;
+    if (this.heroes_form.valid) {
+      this.heroes_list.push(form.value);
+      form.reset();
+      alert('Agregado Correctamente');
+    }
   }
 
   delete_heroe(id: any) {
-    this.heroes_list.splice(id, 1);
+    let index = this.heroes_list.map((item) => item.hero_id).indexOf(id);
+    this.heroes_list.splice(index, 1);
     alert('Eliminado correctamente');
   }
 
+  get hero_id() {
+    return this.heroes_form.get('hero_id');
+  }
   get nombre() {
     return this.heroes_form.get('nombre');
   }

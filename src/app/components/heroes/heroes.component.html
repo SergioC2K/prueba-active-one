@@ -33,10 +33,11 @@
                 </figcaption>
               </figure>
               <button
-                (click)="delete_heroe(hero.id)"
+                (click)="delete_heroe(hero.hero_id)"
                 class="btn btn-danger"
                 type="button"
               >
+              {{hero.hero_id}}
                 Eliminar
               </button>
             </li>
@@ -50,6 +51,34 @@
         <h5 class="card-header">Nuevo Heroe</h5>
         <div class="card-body">
           <form (ngSubmit)="add_heroe()" [formGroup]="heroes_form">
+            <div class="mb-3">
+              <label for="hero_id" class="form-label">ID</label>
+              <input
+                type="text"
+                class="form-control"
+                name="hero_id"
+                id="hero_id"
+                formControlName="hero_id"
+              />
+
+              <div
+                *ngIf="
+                  hero_id &&
+                  hero_id.invalid &&
+                  hero_id.errors &&
+                  (hero_id.touched || hero_id.dirty)
+                "
+              >
+                <div
+                  class="alert alert-danger"
+                  role="alert"
+                  *ngIf="hero_id.hasError('required')"
+                >
+                  <strong> El id es obligatorio.</strong>
+                </div>
+              </div>
+            </div>
+
             <div class="mb-3">
               <label for="nombre" class="form-label">Nombre</label>
               <input
